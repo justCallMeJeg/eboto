@@ -5,6 +5,8 @@
     "ms-vscode.vscode-typescript-next",
     "bradlc.vscode-tailwindcss",
     "dsznajder.es7-react-js-snippets",
-    "PKief.material-icon-theme"
+    "PKief.material-icon-theme",
+
+    "denoland.vscode-deno"
   ]
 }
