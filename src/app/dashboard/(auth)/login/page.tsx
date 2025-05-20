@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { GoogleIconColored } from "@/components/ui/icons";
+import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import LoginForm from "./form";
 
 export const metadata: Metadata = {
@@ -9,7 +11,14 @@ export const metadata: Metadata = {
   description: "Login to your SECURE Chain account",
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const supabase = await createClient();
+
+  const { data } = await supabase.auth.getUser();
+  if (data?.user) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

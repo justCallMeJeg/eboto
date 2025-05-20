@@ -33,5 +33,5 @@ export async function signup(formData: SignUpFormParams): Promise<{ success?: bo
   }
 
   // Simulate success
-  return { success: true, message: "Account created successfully" };
+  return { success: true };
 }

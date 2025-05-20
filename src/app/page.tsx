@@ -11,63 +11,14 @@ import {
 import Link from "next/link";
 
 import { AnimatedBackground } from "@/components/animated-background";
-import { MobileNav } from "@/components/mobile-nav";
+import { Header } from "@/components/header";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mr-auto ml-auto pr-16 pl-16 flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-          <div className="flex gap-6 md:gap-10">
-            <Link href="/#hero" className="flex items-center space-x-2">
-              <Shield className="h-6 w-6" />
-              <span className="inline-block font-bold">SECURE Chain</span>
-            </Link>
-            <nav className="hidden gap-6 md:flex">
-              <Link
-                href="#features"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Features
-              </Link>
-              <Link
-                href="#how-it-works"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                How It Works
-              </Link>
-              <Link
-                href="#pricing"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Pricing
-              </Link>
-              <Link
-                href="#docs"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Documentation
-              </Link>
-            </nav>
-          </div>
-          <div className="flex flex-1 items-center justify-end space-x-4">
-            <nav className="flex items-center space-x-2 gap-4">
-              <Link
-                href="/dashboard/login"
-                className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-primary sm:inline-block"
-              >
-                Login
-              </Link>
-              <Button asChild className="hidden sm:inline-flex">
-                <Link href="/dashboard/signup">Get Started</Link>
-              </Button>
-              <MobileNav />
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="flex-1">
         <section
           id="#hero"

@@ -15,6 +15,7 @@ import { SignUpFormFieldType, SignUpFormSchema } from "@/lib/forms";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { redirect } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -72,6 +73,10 @@ export default function SignUpForm() {
             });
           });
         }
+      } else if (result?.message) {
+        setServerError(result.message);
+      } else if (result?.success) {
+        redirect("/dashboard");
       }
     });
   }
