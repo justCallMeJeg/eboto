@@ -9,6 +9,7 @@ export async function signup(formData: SignUpFormParams): Promise<{ success?: bo
 
   // Validate form data using Zod schema
   const validationResults = SignUpFormSchema.safeParse(formData);
+  console.log("validationResults", validationResults);
   if (!validationResults.success) {
     const errors = validationResults.error.flatten();
     return { error: errors.fieldErrors };

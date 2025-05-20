@@ -7,8 +7,8 @@ import { redirect } from "next/navigation";
 import LoginForm from "./form";
 
 export const metadata: Metadata = {
-  title: "Login | SECURE Chain",
-  description: "Login to your SECURE Chain account",
+  title: "Login | eBOTO",
+  description: "Login to your eBOTO account",
 };
 
 export default async function LoginPage() {

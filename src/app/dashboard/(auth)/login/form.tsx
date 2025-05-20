@@ -87,7 +87,7 @@ export default function LoginForm() {
               <div className="flex items-center justify-between">
                 <FormLabel>Password</FormLabel>
                 <Link
-                  href="/dashboard/forgot-password"
+                  href="/dashboard/recovery"
                   className="text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
                   Forgot password?

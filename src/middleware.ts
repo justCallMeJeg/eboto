@@ -13,6 +13,6 @@ export const config = {
      * - root path ("/")
      * Feel free to modify this pattern to include more paths.
      */
-    "/((?!_next/static|_next/image|favicon.ico|dashboard/signup|dashboard/login|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|dashboard/signup|dashboard/login|dashboard/recovery|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|$).*)",
   ],
 };
