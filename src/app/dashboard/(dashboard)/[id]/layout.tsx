@@ -111,35 +111,35 @@ export default function RootLayout({
           variant="ghost"
           size="sm"
           onClick={() => {
-            redirect(`/dashboard/${electionID}/configurations`);
-          }}
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          <span className="text-sm font-medium">Configurations</span>
-        </Button>
-        <Separator className="my-2 w-full" />
-        <Button
-          className="w-full justify-start"
-          variant="ghost"
-          size="sm"
-          onClick={() => {
-            redirect(`/dashboard/${electionID}/users`);
-          }}
-        >
-          <UserIcon className="mr-2 h-4 w-4" />
-          <span className="text-sm font-med">Users</span>
-        </Button>
-        <Separator className="my-2 w-full" />
-        <Button
-          className="w-full justify-start"
-          variant="ghost"
-          size="sm"
-          onClick={() => {
             redirect(`/dashboard/${electionID}/analytics`);
           }}
         >
           <ChartNoAxesColumnIcon className="mr-2 h-4 w-4" />
           <span className="text-sm font-med">Analytics</span>
+        </Button>
+
+        <Separator className="my-2 w-full" />
+        <Button
+          className="w-full justify-start"
+          variant="ghost"
+          size="sm"
+          onClick={() => {
+            redirect(`/dashboard/${electionID}/configurations/positions`);
+          }}
+        >
+          <Settings className="mr-2 h-4 w-4" />
+          <span className="text-sm font-medium">Configurations</span>
+        </Button>
+        <Button
+          className="w-full justify-start"
+          variant="ghost"
+          size="sm"
+          onClick={() => {
+            redirect(`/dashboard/${electionID}/users/candidates`);
+          }}
+        >
+          <UserIcon className="mr-2 h-4 w-4" />
+          <span className="text-sm font-med">Users</span>
         </Button>
       </div>
       <div className="">{children}</div>
