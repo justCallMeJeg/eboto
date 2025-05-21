@@ -1,10 +1,10 @@
-"use server";
+"use client";
 
 import {
   PasswordRecoveryFormParams,
   PasswordRecoveryFormSchema,
 } from "@/lib/forms";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 
 export async function updatePassword(
   formData: PasswordRecoveryFormParams
