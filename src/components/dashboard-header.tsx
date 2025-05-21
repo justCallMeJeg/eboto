@@ -28,31 +28,25 @@ const supabase = createClient();
 type Project = {
   value: string;
   label: string;
-  icon?: React.ReactNode;
 };
+
+const projects: Project[] = [
+  {
+    value: "PINASElections",
+    label: "PINASElections",
+  },
+  {
+    value: "TsaIkNotes",
+    label: "TsaIkNotes",
+  },
+];
 
 export function DashboardHeader() {
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
 
   const [open, setOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>({
-    value: "PINASElections",
-    label: "PINASElections",
-    icon: <BoxIcon className="mr-2 h-4 w-4" />,
-  });
-
-  // Example project list
-  const projects: Project[] = [
-    {
-      value: "PINASElections",
-      label: "PINASElections",
-    },
-    {
-      value: "TsaIkNotes",
-      label: "TsaIkNotes",
-    },
-  ];
+  const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
 
   useEffect(() => {
     setCurrentPathname(pathname);
@@ -91,72 +85,77 @@ export function DashboardHeader() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/dashboard">
+              <BreadcrumbLink href="/">
                 <Shield className="h-6 w-6" />
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 px-2 text-base font-semibold"
-                  >
-                    {selectedProject?.label}
-                    <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-64" align="start">
-                  <Command>
-                    <CommandInput placeholder="Find project..." />
-                    <CommandList>
-                      <CommandEmpty>No results found.</CommandEmpty>
-                      <CommandGroup>
-                        {projects.map((project) => (
-                          <CommandItem
-                            key={project.value}
-                            value={project.value}
-                            onSelect={() => {
-                              setSelectedProject(project);
-                              setOpen(false);
-                            }}
-                          >
-                            <span>{project.label}</span>
-                            {selectedProject?.value === project.value && (
-                              <span className="ml-auto text-primary">✔</span>
-                            )}
-                          </CommandItem>
-                        ))}
-                        <CommandItem
-                          onSelect={() => {
-                            // handle new project creation here
-                            setOpen(false);
-                          }}
-                        >
-                          <span className="mr-2 text-lg">＋</span>
-                          <span>New Election</span>
-                        </CommandItem>
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </BreadcrumbItem>
+            {/^\/dashboard\/.+$/.test(currentPathname || "") && (
+              <>
+                <BreadcrumbSeparator>
+                  <Slash />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="flex items-center gap-2 px-2 text-base font-semibold"
+                      >
+                        <BoxIcon className="mr-2 h-4 w-4" />
+                        {selectedProject.label}
+                        <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0 w-64" align="start">
+                      <Command>
+                        <CommandInput placeholder="Find project..." />
+                        <CommandList>
+                          <CommandEmpty>No results found.</CommandEmpty>
+                          <CommandGroup>
+                            {projects.map((project) => (
+                              <CommandItem
+                                key={project.value}
+                                value={project.value}
+                                onSelect={() => {
+                                  setSelectedProject(project);
+                                  setOpen(false);
+                                }}
+                              >
+                                <BoxIcon className="mr-2 h-4 w-4" />
+                                <span>{project.label}</span>
+                                {selectedProject.value === project.value && (
+                                  <span className="ml-auto text-primary">
+                                    ✔
+                                  </span>
+                                )}
+                              </CommandItem>
+                            ))}
+                            <CommandItem
+                              onSelect={() => {
+                                // handle new project creation here
+                                setOpen(false);
+                              }}
+                            >
+                              <span className="mr-2 text-lg">＋</span>
+                              <span>New Election</span>
+                            </CommandItem>
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </BreadcrumbItem>
+              </>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
-        {/* Project Switcher */}
-
         {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Edit Admins button (optional, as in your code) */}
-        {/^\/dashboard\/[^/]+$/.test(currentPathname || "") && (
+        {/^\/dashboard\/.+$/.test(currentPathname || "") && (
           <Button variant="default" size="default" className="mr-2">
             <UsersIcon className="h-4 w-4" />
-            <span className="text-sm font-medium">Edit Admins</span>
+            <span className="text-sm font-medium">Invite Admins</span>
           </Button>
         )}
 

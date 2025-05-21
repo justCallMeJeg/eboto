@@ -22,10 +22,18 @@ export interface PasswordRecoveryFormParams {
   confirmPassword: string;
 }
 
+export interface NewElectionFormParams {
+  name: string;
+  description?: string;
+  start_date: string; // Keep as string for simple input, can be ISO date string
+  end_date: string;   // Keep as string for simple input, can be ISO date string
+}
+
 export type LoginFormFieldType = FormFieldType<LoginFormParams>;
 export type SignUpFormFieldType = FormFieldType<SignUpFormParams>;
 export type RecoveryFormFieldType = FormFieldType<RecoveryFormParams>;
 export type PasswordRecoveryFormFieldType = FormFieldType<PasswordRecoveryFormParams>;
+export type NewElectionFormFieldType = FormFieldType<NewElectionFormParams>;
 
 export const LoginFormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -73,4 +81,18 @@ export const PasswordRecoveryFormSchema = z.object({
   confirmPassword: z.string().min(1, {
     message: "Confirm Password must not be empty.",
   }),
+});
+
+export const NewElectionFormSchema = z.object({
+  name: z.string().min(3, { message: "Election name must be at least 3 characters." }).max(100, { message: "Election name must be at most 100 characters." }),
+  description: z.string().max(500, { message: "Description must be at most 500 characters." }).optional(),
+  start_date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid start date format." }),
+  end_date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid end date format." }),
+}).refine(data => {
+  const startDate = new Date(data.start_date);
+  const endDate = new Date(data.end_date);
+  return endDate > startDate;
+}, {
+  message: "End date must be after start date.",
+  path: ["end_date"], // Path to the field to attach the error message to
 });
