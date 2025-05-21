@@ -96,3 +96,30 @@ export const NewElectionFormSchema = z.object({
   message: "End date must be after start date.",
   path: ["end_date"], // Path to the field to attach the error message to
 });
+
+// Election Group Forms
+export interface ElectionGroupFormParams {
+  name: string;
+  description?: string;
+}
+
+export type ElectionGroupFormFieldType = FormFieldType<ElectionGroupFormParams>;
+
+export const ElectionGroupFormSchema = z.object({
+  name: z.string().min(1, "Group name cannot be empty.").max(100, "Group name too long."),
+});
+
+// Election Position Forms (Placeholder for now, will be detailed later)
+export interface ElectionPositionFormParams {
+  title: string;
+  description?: string;
+  slots_available: number;
+}
+
+export type ElectionPositionFormFieldType = FormFieldType<ElectionPositionFormParams>;
+
+export const ElectionPositionFormSchema = z.object({
+  title: z.string().min(1, "Position title cannot be empty.").max(100, "Position title too long."),
+  description: z.string().max(255, "Description too long.").optional(),
+  slots_available: z.coerce.number().min(1, "Slots available must be at least 1."),
+});

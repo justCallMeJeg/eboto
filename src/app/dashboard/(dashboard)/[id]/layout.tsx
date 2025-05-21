@@ -124,7 +124,7 @@ export default function RootLayout({
           variant="ghost"
           size="sm"
           onClick={() => {
-            redirect(`/dashboard/${electionID}/configurations/positions`);
+            redirect(`/dashboard/${electionID}/configurations/groups`);
           }}
         >
           <Settings className="mr-2 h-4 w-4" />
