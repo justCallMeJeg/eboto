@@ -227,9 +227,8 @@ export function DashboardHeader() {
         <div className="flex-1" />
 
         {selectedElection && ( // Show Invite Admins button only if an election is selected
-          <Button variant="default" size="default" className="mr-2">
-            <UsersIcon className="mr-2 h-4 w-4" />{" "}
-            {/* Added mr-2 for spacing */}
+          <Button variant="default" size="default" className="mr-2" disabled>
+            <UsersIcon className="h-4 w-4" /> {/* Added mr-2 for spacing */}
             <span className="text-sm font-medium">Invite Admins</span>
           </Button>
         )}
