@@ -83,18 +83,14 @@ export interface ElectionGroup {
   id: string;
   election_id: string;
   name: string;
-  description?: string | null;
   created_at: string;
   updated_at: string;
-  // You might want to add voter_count or similar if you track members of a group directly
 }
 
 export interface ElectionPosition {
   id: string;
   election_id: string;
-  title: string;
-  description?: string | null;
-  slots_available: number;
+  name: string;
   created_at: string;
   updated_at: string;
 }
