@@ -9,35 +9,45 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ElectionGroup } from "@/lib/data";
+import { ElectionGroup, VotersData } from "@/lib/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+// Enhanced VotersData to reflect the nested group name
+export type VoterWithGroupName = VotersData & {
+  usergroups: Pick<ElectionGroup, "name"> | null;
+};
 
-export type GroupActionProps = {
-  group: ElectionGroup;
-  onEdit: (group: ElectionGroup) => void;
-  onDelete: (group: ElectionGroup) => void;
+export type VoterActionProps = {
+  voter: VoterWithGroupName;
+  onEdit: (voter: VoterWithGroupName) => void;
+  onDelete: (voter: VoterWithGroupName) => void;
 };
 
 export const getColumns = ({
   onEdit,
   onDelete,
-}: Omit<GroupActionProps, "group">): ColumnDef<ElectionGroup>[] => [
+}: Omit<VoterActionProps, "voter">): ColumnDef<VoterWithGroupName>[] => [
   {
-    accessorKey: "name",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+  },
+  {
+    accessorKey: "usergroups.name", // Access nested group name
+    header: "Group",
+    cell: ({ row }) => {
+      const voter = row.original;
+      return voter.usergroups?.name || "N/A";
     },
   },
   {
@@ -51,8 +61,7 @@ export const getColumns = ({
   {
     id: "actions",
     cell: ({ row }) => {
-      const group = row.original;
-
+      const voter = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -63,15 +72,15 @@ export const getColumns = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => onEdit(group)}>
-              Edit Group
+            <DropdownMenuItem onClick={() => onEdit(voter)}>
+              Edit Voter
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => onDelete(group)}
+              onClick={() => onDelete(voter)}
               className="text-destructive focus:text-destructive focus:bg-destructive/10"
             >
-              Delete Group
+              Delete Voter
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

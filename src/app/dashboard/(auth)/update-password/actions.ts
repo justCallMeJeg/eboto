@@ -28,12 +28,9 @@ export async function updatePassword(
   });
 
   if (error) {
-    if (error.code === "user_already_exists") {
-      return { error: { email: ["Email already in use"] } };
-    }
     console.error("Error updating password:", error);
     return {
-      message: `An error occurred during password update with error code: ${error.code}`,
+      message: error.message || "An error occurred during password update.", // Use error.message
     };
   }
 

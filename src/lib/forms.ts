@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 
 export type FormFieldType<T> = keyof T;
 
@@ -108,7 +108,7 @@ export const ElectionGroupFormSchema = z.object({
   name: z.string().min(1, "Group name cannot be empty.").max(100, "Group name too long."),
 });
 
-// Election Position Forms (Placeholder for now, will be detailed later)
+// Election Position Forms
 export interface ElectionPositionFormParams {
   name: string;
 }
@@ -118,3 +118,41 @@ export type ElectionPositionFormFieldType = FormFieldType<ElectionPositionFormPa
 export const ElectionPositionFormSchema = z.object({
   name: z.string().min(1, "Position name cannot be empty.").max(100, "Position name too long."),
 });
+
+// Election Candidate Forms
+export interface ElectionCandidateFormParams {
+  display_name: string;
+  party: string;
+  position_id: string;
+  image_url?: string;
+  group_id?: string | null; // Added group_id
+}
+
+export type ElectionCandidateFormFieldType = FormFieldType<ElectionCandidateFormParams>;
+
+export const ElectionCandidateFormSchema = z.object({
+  display_name: z.string().min(1, "Display name cannot be empty.").max(100, "Display name too long."),
+  party: z.string().min(1, "Party cannot be empty.").max(50, "Party name too long."),
+  position_id: z.string().uuid("Invalid position selected."),
+  image_url: z.string().url("Invalid URL format for image.").optional().or(z.literal("")),
+  group_id: z.string().uuid("Invalid group selected.").nullable().optional(), // Added group_id
+});
+
+// Election Voter Forms
+export interface ElectionVoterFormParams {
+  email: string;
+  group_id: string;
+}
+
+export type ElectionVoterFormFieldType = FormFieldType<ElectionVoterFormParams>;
+
+export const ElectionVoterFormSchema = z.object({
+  email: z.string().email("Invalid email address."),
+  group_id: z.string().uuid("Invalid group selected."),
+});
+
+export const VoterLoginFormSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+});
+
+export type VoterLoginFormFields = z.infer<typeof VoterLoginFormSchema>;

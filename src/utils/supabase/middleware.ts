@@ -39,16 +39,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const pathname = request.nextUrl.pathname;
+
+  // If the user is not authenticated and trying to access a protected dashboard route
+  // (excluding admin login, signup, etc.), redirect to the main dashboard login.
+  // Ballot voting pages (e.g., /ballot/[id]/vote) are handled separately and are not under /dashboard.
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith("//dashboard/login") &&
-    !request.nextUrl.pathname.startsWith("/dashboard")
+    pathname.startsWith("/dashboard") &&
+    // !pathname.startsWith("/dashboard/ballot") && // No longer needed as ballot page moved
+    !pathname.startsWith("/dashboard/login") &&
+    !pathname.startsWith("/dashboard/signup") &&
+    !pathname.startsWith("/dashboard/forgot-password") && 
+    !pathname.startsWith("/dashboard/update-password")
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
-    url.pathname = "/dashboard/login";
+    url.pathname = "/dashboard/login"; // Admin/Organizer login
     return NextResponse.redirect(url);
   }
+
+  // For ballot voting pages (e.g., /ballot/[id]/vote):
+  // If the user is not authenticated, the page component itself will redirect
+  // them to the specific voter login page (e.g., /ballot/[id]).
+  // The Supabase middleware still runs on these paths (if matched by `config.matcher`)
+  // to process magic link tokens if a token is present in the URL.
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:

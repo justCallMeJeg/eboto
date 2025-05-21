@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton
 import { createClient } from "@/utils/supabase/client";
 import {
+  ArrowDownSquare,
   ChartNoAxesColumnIcon,
   HomeIcon,
   Settings,
@@ -115,7 +116,7 @@ export default function RootLayout({
           }}
         >
           <ChartNoAxesColumnIcon className="mr-2 h-4 w-4" />
-          <span className="text-sm font-med">Analytics</span>
+          <span className="text-sm font-medium">Analytics</span>
         </Button>
 
         <Separator className="my-2 w-full" />
@@ -139,7 +140,20 @@ export default function RootLayout({
           }}
         >
           <UserIcon className="mr-2 h-4 w-4" />
-          <span className="text-sm font-med">Users</span>
+          <span className="text-sm font-medium">Users</span>
+        </Button>
+
+        <Separator className="my-2 w-full" />
+        <Button
+          className="w-full justify-start"
+          variant="ghost"
+          size="sm"
+          onClick={() => {
+            redirect(`/dashboard/${electionID}/realtime`);
+          }}
+        >
+          <ArrowDownSquare className="mr-2 h-4 w-4" />
+          <span className="text-sm font-medium">Real-time Results</span>
         </Button>
       </div>
       <div className="">{children}</div>

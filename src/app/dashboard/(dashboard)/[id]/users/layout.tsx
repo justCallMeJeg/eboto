@@ -42,7 +42,7 @@ export default function DashboardElectionUsersPage({
           <span className="text-sm font-medium">Voters</span>
         </Button>
       </div>
-      <div>{children}</div>
+      <div className="flex-1 p-4">{children}</div>
     </div>
   );
 }

@@ -38,14 +38,6 @@ export const getColumns = ({
     },
   },
   {
-    accessorKey: "slots_available",
-    header: "Slots",
-    cell: ({ row }) => {
-      const slots = row.getValue("slots_available") as number;
-      return <div className="text-center">{slots}</div>;
-    },
-  },
-  {
     accessorKey: "created_at",
     header: "Created At",
     cell: ({ row }) => {

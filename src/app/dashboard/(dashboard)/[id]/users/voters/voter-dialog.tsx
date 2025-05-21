@@ -18,75 +18,100 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ElectionGroup } from "@/lib/data";
 import {
-  ElectionGroupFormFieldType,
-  ElectionGroupFormParams,
-  ElectionGroupFormSchema,
+  ElectionVoterFormFieldType,
+  ElectionVoterFormParams,
+  ElectionVoterFormSchema,
 } from "@/lib/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createElectionGroup, updateElectionGroup } from "../actions";
+import { getElectionGroups } from "../../configurations/actions"; // Action to get groups
+import { createElectionVoter, updateElectionVoter } from "../actions";
+import { VoterWithGroupName } from "./columns";
 
-interface GroupDialogProps {
+interface VoterDialogProps {
   electionId: string;
-  group?: ElectionGroup | null; // For editing
+  voter?: VoterWithGroupName | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: () => void; // Callback to refresh data
+  onSave: () => void;
 }
 
-export function GroupDialog({
+export function VoterDialog({
   electionId,
-  group,
+  voter,
   open,
   onOpenChange,
   onSave,
-}: GroupDialogProps) {
+}: VoterDialogProps) {
   const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
+  const [groups, setGroups] = useState<ElectionGroup[]>([]);
 
-  const form = useForm<ElectionGroupFormParams>({
-    resolver: zodResolver(ElectionGroupFormSchema),
+  const form = useForm<ElectionVoterFormParams>({
+    resolver: zodResolver(ElectionVoterFormSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      email: "",
+      group_id: "",
     },
   });
 
   useEffect(() => {
-    if (group) {
-      form.reset({
-        name: group.name,
-        description: group.description || "",
-      });
-    } else {
-      form.reset({ name: "", description: "" });
+    async function fetchGroups() {
+      if (open) {
+        const result = await getElectionGroups(electionId);
+        if (result.data) {
+          setGroups(result.data);
+        } else {
+          toast.error("Failed to load groups for selection.");
+        }
+      }
     }
-  }, [group, form, open]); // Reset form when group or open state changes
+    fetchGroups();
+  }, [electionId, open]);
 
-  async function onSubmit(values: ElectionGroupFormParams) {
+  useEffect(() => {
+    if (voter && open) {
+      form.reset({
+        email: voter.email,
+        group_id: voter.group_id,
+      });
+    } else if (!voter && open) {
+      form.reset({
+        email: "",
+        group_id: "",
+      });
+    }
+  }, [voter, form, open]);
+
+  async function onSubmit(values: ElectionVoterFormParams) {
     setServerError(null);
     startTransition(async () => {
       let result;
-      if (group) {
-        // Editing existing group
-        result = await updateElectionGroup(group.id, electionId, values);
+      if (voter) {
+        result = await updateElectionVoter(voter.id, electionId, values);
       } else {
-        // Creating new group
-        result = await createElectionGroup(electionId, values);
+        result = await createElectionVoter(electionId, values);
       }
-      console.log("Result:", result);
+
       if (result.success) {
         toast.success(result.message);
-        onSave(); // Trigger data refresh
-        onOpenChange(false); // Close dialog
+        onSave();
+        onOpenChange(false);
       } else {
         if (result.errorType === "validation" && result.errors) {
           Object.entries(result.errors).forEach(([field, messages]) => {
-            form.setError(field as ElectionGroupFormFieldType, {
+            form.setError(field as ElectionVoterFormFieldType, {
               type: "server",
               message: Array.isArray(messages) ? messages[0] : String(messages),
             });
@@ -110,11 +135,11 @@ export function GroupDialog({
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{group ? "Edit Group" : "Create New Group"}</DialogTitle>
+          <DialogTitle>{voter ? "Edit Voter" : "Add New Voter"}</DialogTitle>
           <DialogDescription>
-            {group
-              ? "Update the details of this group."
-              : "Fill in the details for the new group."}
+            {voter
+              ? "Update the details of this voter."
+              : "Fill in the details for the new voter."}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -124,16 +149,44 @@ export function GroupDialog({
           >
             <FormField
               control={form.control}
-              name="name"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Group Name</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g., Year Level Representatives"
+                      placeholder="e.g., jane.smith@example.com"
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="group_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Group</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={groups.length === 0}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a group" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {groups.map((grp) => (
+                        <SelectItem key={grp.id} value={grp.id}>
+                          {grp.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -152,12 +205,12 @@ export function GroupDialog({
               </Button>
               <Button type="submit" disabled={isPending}>
                 {isPending
-                  ? group
+                  ? voter
                     ? "Saving..."
-                    : "Creating..."
-                  : group
+                    : "Adding..."
+                  : voter
                   ? "Save Changes"
-                  : "Create Group"}
+                  : "Add Voter"}
               </Button>
             </DialogFooter>
           </form>

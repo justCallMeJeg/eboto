@@ -20,7 +20,7 @@ export default function LandingPage() {
       <Header />
       <main className="flex-1">
         <section
-          id="#hero"
+          id="hero"
           className="relative space-y-6 overflow-hidden pb-8 pt-10 md:pb-12 md:pt-16 lg:py-32 min-h-screen flex items-center"
         >
           <AnimatedBackground />
