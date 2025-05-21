@@ -12,8 +12,57 @@ export interface ElectionData {
     start_date: string;
     end_date: string;
     owner_id: string;
-    members?: ElectionMember[];
     voter_count: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface UserGroupsData {
+    id: string;
+    election_id: string;
+    name: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface VotersData {
+    id: string;
+    election_id: string;
+    display_name: string;
+    group_id: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface CandidatePositionsData {
+    id: string;
+    election_id: string;
+    name: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface BallotData {
+    id: string;
+    election_id: string;
+    voter_id: string;
+    votes: VoteData[]
+    created_at: string;
+    updated_at: string;
+}
+
+export interface VoteData {
+    candidate_id: string;
+    position_id: string;
+}
+
+export interface CandidatesData {
+    id: string;
+    election_id: string;
+    position_id: string;
+    party: string;
+    display_name: string;
+    image_url: string;
     created_at: string;
     updated_at: string;
 }
