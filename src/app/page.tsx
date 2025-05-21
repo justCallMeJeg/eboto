@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  BarChart3,
   Check,
   Database,
   Lock,
@@ -26,16 +25,17 @@ export default function LandingPage() {
         >
           <AnimatedBackground />
           <div className="container mr-auto ml-auto pr-16 pl-16 flex max-w-[64rem] flex-col items-center gap-4 text-center">
-            <div className="rounded-full bg-muted px-4 py-1.5 text-sm font-medium">
-              Secure Elections for Educational Institutions
-            </div>
+            {/* <div className="rounded-full bg-muted px-4 py-1.5 text-sm font-medium">
+              Utility Application for Student Elections
+            </div> */}
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-              Blockchain-Powered{" "}
-              <span className="text-primary">Election Platform</span>
+              <span className="text-primary">eBOTO</span>: A Utility Web App for
+              Student Elections
             </h1>
             <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-              Conduct transparent, secure, and tamper-proof elections for your
-              educational institution with our blockchain-based voting system.
+              Conduct secure, transparent, and accessible elections for your
+              educational institution with our comprehensive online voting
+              system.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild size="lg">
@@ -54,9 +54,9 @@ export default function LandingPage() {
           <div className="mx-auto grid max-w-[58rem] grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex flex-col items-center justify-center space-y-2 rounded-lg border bg-background p-4 shadow-sm transition-all hover:shadow-md">
               <Shield className="h-12 w-12 text-primary" />
-              <h3 className="text-xl font-bold">Secure & Immutable</h3>
+              <h3 className="text-xl font-bold">Secure & Protected</h3>
               <p className="text-center text-muted-foreground">
-                Blockchain technology ensures votes cannot be altered
+                Implements multi-layered security measures to protect user data
               </p>
             </div>
             <div className="flex flex-col items-center justify-center space-y-2 rounded-lg border bg-background p-4 shadow-sm transition-all hover:shadow-md">
@@ -92,7 +92,7 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="mx-auto mt-8 grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-              <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
+              {/* <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
                 <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                   <Shield className="h-10 w-10 text-primary" />
                   <div className="space-y-2">
@@ -103,7 +103,7 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
                 <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                   <Users className="h-10 w-10 text-primary" />
@@ -137,7 +137,7 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-              <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
+              {/* <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
                 <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                   <BarChart3 className="h-10 w-10 text-primary" />
                   <div className="space-y-2">
@@ -147,7 +147,7 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="relative overflow-hidden rounded-lg border bg-background p-2 transition-all hover:shadow-md">
                 <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                   <Database className="h-10 w-10 text-primary" />
@@ -177,9 +177,7 @@ export default function LandingPage() {
           <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-2 lg:gap-12">
             <div className="order-2 lg:order-1 flex items-center justify-center">
               <div className="relative h-64 w-full md:h-80 rounded-lg border bg-muted/50 flex items-center justify-center">
-                <p className="text-muted-foreground">
-                  Blockchain Visualization
-                </p>
+                <p className="text-muted-foreground">App Visualization</p>
               </div>
             </div>
             <div className="order-1 flex flex-col justify-center space-y-4 lg:order-2">
@@ -211,7 +209,7 @@ export default function LandingPage() {
                     <h3 className="text-xl font-bold">3. Verify Identities</h3>
                     <p className="text-muted-foreground">
                       Participants verify their identities through email
-                      confirmation or ID upload for admin review.
+                      confirmation.
                     </p>
                   </div>
                 </li>
@@ -229,7 +227,7 @@ export default function LandingPage() {
                     <h3 className="text-xl font-bold">5. Publish Results</h3>
                     <p className="text-muted-foreground">
                       Close voting and publish results with complete
-                      transparency and blockchain verification.
+                      transparency.
                     </p>
                   </div>
                 </li>
@@ -255,10 +253,10 @@ export default function LandingPage() {
                   <Check className="mt-1 h-5 w-5 text-primary" />
                   <span>Secure, token-based access</span>
                 </li>
-                <li className="flex items-start gap-2">
+                {/* <li className="flex items-start gap-2">
                   <Check className="mt-1 h-5 w-5 text-primary" />
                   <span>Immutable vote recording</span>
-                </li>
+                </li> */}
                 <li className="flex items-start gap-2">
                   <Check className="mt-1 h-5 w-5 text-primary" />
                   <span>Transparent verification process</span>
@@ -406,8 +404,8 @@ export default function LandingPage() {
                   Ready to get started?
                 </h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                  Join educational institutions worldwide using S.E.C.U.R.E
-                  Chain for their election needs.
+                  Join educational institutions worldwide <br /> using eBOTO for
+                  their election needs.
                 </p>
               </div>
               <div className="mx-auto w-full max-w-sm space-y-2">
@@ -436,7 +434,7 @@ export default function LandingPage() {
       <footer className="border-t py-6 md:py-0">
         <div className="container mr-auto ml-auto pr-16 pl-16 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 S.E.C.U.R.E Chain. All rights reserved.
+            © 2025 eBOTO. All rights reserved.
           </p>
           <div className="flex gap-4 items-center">
             <Link

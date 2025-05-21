@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { Shield } from "lucide-react";
+import { Vote } from "lucide-react";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { AvatarDropdown } from "./avatar-dropdown";
@@ -32,8 +32,8 @@ export function Header({ initialIsLoggedIn = false }) {
       <div className="container mx-auto flex h-16 items-center px-16 space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex gap-6 md:gap-10">
           <NextLink href="/#hero" className="flex items-center space-x-2">
-            <Shield className="h-6 w-6" />
-            <span className="inline-block font-bold">SECURE Chain</span>
+            <Vote className="h-6 w-6" />
+            <span className="inline-block font-bold">eBOTO</span>
           </NextLink>
           <nav className="hidden gap-6 lg:flex">
             <NextLink
